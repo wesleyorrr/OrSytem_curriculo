@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="OR System Currículo Inteligente — analise, compare e otimize seu currículo de forma gratuita, direto no navegador." />
+  <meta name="description" content="OR System Currículo Inteligente — analise, compare e gere um currículo direcionado para uma vaga específica, de forma gratuita, direto no navegador." />
   <meta name="author" content="OR System" />
   <title>OR System — Currículo Inteligente</title>
   <link rel="stylesheet" href="style.css" />
@@ -25,21 +25,22 @@
       <nav class="main-nav" aria-label="Navegação principal">
         <a href="#analise" class="nav-link">Análise</a>
         <a href="#como-funciona" class="nav-link">Como funciona</a>
+        <a href="#limitacoes" class="nav-link">Limitações</a>
         <a href="#privacidade" class="nav-link">Privacidade</a>
       </nav>
     </div>
   </header>
 
   <!-- ============================================================
-       HERO / INTRODUÇÃO
+       HERO
        ============================================================ -->
   <section class="hero" aria-labelledby="hero-title">
     <div class="container">
-      <h1 id="hero-title">Analise e otimize seu currículo em minutos</h1>
+      <h1 id="hero-title">Construa um currículo direcionado para a vaga certa</h1>
       <p class="hero-subtitle">
-        Cole seu currículo e a descrição da vaga. O OR System compara as informações,
-        mostra palavras-chave presentes e ausentes, aponta melhorias e gera uma versão
-        profissional pronta para imprimir ou salvar em PDF.
+        Cole seu currículo e a descrição da vaga. O OR System estrutura as duas informações,
+        compara requisitos com evidências reais do seu perfil, gera perguntas objetivas para
+        completar lacunas e produz um currículo direcionado, pronto para imprimir ou salvar em PDF.
       </p>
       <ul class="hero-badges" aria-label="Destaques do sistema">
         <li>Gratuito</li>
@@ -52,18 +53,16 @@
   </section>
 
   <!-- ============================================================
-       MENSAGENS GLOBAIS (erro / sucesso / aviso)
+       MENSAGENS GLOBAIS
        ============================================================ -->
   <div id="global-messages" class="container" aria-live="polite" aria-atomic="true"></div>
 
   <!-- ============================================================
-       ÁREA PRINCIPAL — ANÁLISE
+       ÁREA PRINCIPAL
        ============================================================ -->
   <main id="analise" class="container main-area">
 
-    <!-- -------------------------------
-         ENTRADA DE DADOS
-         ------------------------------- -->
+    <!-- 1. ENTRADA -->
     <section class="card" aria-labelledby="entrada-title">
       <header class="card-header">
         <h2 id="entrada-title">1. Insira os dados</h2>
@@ -74,7 +73,6 @@
       </header>
 
       <div class="grid-2">
-        <!-- Currículo -->
         <div class="field">
           <label for="input-resume">
             Seu currículo <span class="required" aria-hidden="true">*</span>
@@ -92,7 +90,6 @@
           </div>
         </div>
 
-        <!-- Vaga -->
         <div class="field">
           <label for="input-job">
             Descrição da vaga <span class="required" aria-hidden="true">*</span>
@@ -111,7 +108,6 @@
         </div>
       </div>
 
-      <!-- Ações -->
       <div class="actions-row">
         <button type="button" id="btn-analyze" class="btn btn-primary">
           Analisar compatibilidade
@@ -132,14 +128,12 @@
       </p>
     </section>
 
-    <!-- -------------------------------
-         RESULTADOS
-         ------------------------------- -->
+    <!-- 2. RESULTADOS -->
     <section id="results" class="card hidden" aria-labelledby="resultados-title">
       <header class="card-header">
         <h2 id="resultados-title">2. Resultado da análise</h2>
         <p class="card-help">
-          Veja a estimativa de compatibilidade, palavras-chave e sugestões de melhoria.
+          Veja a estimativa de aderência, palavras-chave, requisitos e sugestões.
         </p>
       </header>
 
@@ -155,7 +149,7 @@
           </div>
         </div>
         <div class="score-info">
-          <h3 id="score-label">Compatibilidade estimada</h3>
+          <h3 id="score-label">Aderência estimada à vaga</h3>
           <p id="score-description" class="score-description">
             Preencha os campos e clique em “Analisar compatibilidade”.
           </p>
@@ -179,13 +173,13 @@
         </div>
       </div>
 
-      <!-- Classificação dos requisitos -->
+      <!-- Requisitos -->
       <div class="requirements-block">
         <h3>Classificação dos requisitos da vaga</h3>
         <div class="req-legend" aria-hidden="true">
-          <span class="req-dot req-dot-demonstrado"></span> Demonstrado
+          <span class="req-dot req-dot-demonstrado"></span> Comprovado
           <span class="req-dot req-dot-parcial"></span> Parcialmente demonstrado
-          <span class="req-dot req-dot-ausente"></span> Não identificado
+          <span class="req-dot req-dot-ausente"></span> Não demonstrado / não informado
         </div>
         <ul id="requirements-list" class="requirements-list" aria-live="polite">
           <li class="empty">Nenhuma análise realizada ainda.</li>
@@ -199,17 +193,28 @@
           <p class="empty">Nenhuma análise realizada ainda.</p>
         </div>
       </div>
+
+      <!-- Perguntas -->
+      <div class="questions-block">
+        <h3>Perguntas para completar seu perfil</h3>
+        <p class="card-help">
+          Estas perguntas existem porque faltam informações no texto atual.
+          Responder é opcional — nada é inventado pelo sistema.
+        </p>
+        <ul id="questions-list" class="questions-list" aria-live="polite">
+          <li class="empty">Nenhuma pergunta no momento.</li>
+        </ul>
+      </div>
     </section>
 
-    <!-- -------------------------------
-         EDIÇÃO DO CURRÍCULO
-         ------------------------------- -->
+    <!-- 3. EDIÇÃO -->
     <section id="editor" class="card hidden" aria-labelledby="editor-title">
       <header class="card-header">
         <h2 id="editor-title">3. Edite seu currículo</h2>
         <p class="card-help">
-          Aplique as sugestões que fizerem sentido. Você é responsável pela veracidade
-          das informações — o sistema não cria experiências nem competências.
+          Se você não editar nada, o botão "Gerar pré-visualização" produz um currículo
+          direcionado automaticamente (experiências e bullets reordenados por relevância).
+          Você pode sobrescrever como quiser. É sua responsabilidade manter a veracidade.
         </p>
       </header>
 
@@ -234,9 +239,7 @@
       </div>
     </section>
 
-    <!-- -------------------------------
-         PRÉ-VISUALIZAÇÃO
-         ------------------------------- -->
+    <!-- 4. PREVIEW -->
     <section id="preview" class="card hidden" aria-labelledby="preview-title">
       <header class="card-header">
         <h2 id="preview-title">4. Pré-visualização do currículo</h2>
@@ -268,22 +271,42 @@
     <h2 id="como-title">Como funciona</h2>
     <div class="info-grid">
       <article class="info-card">
-        <h3>1. Cole o currículo e a vaga</h3>
-        <p>O sistema lê o texto e identifica seções como contato, formação, experiências e competências.</p>
+        <h3>1. Estruturação</h3>
+        <p>O sistema identifica contato, experiências, formação, competências, idiomas, certificações e projetos no seu currículo. E estrutura a vaga em obrigatórios, desejáveis, técnicas, comportamentais e ferramentas.</p>
       </article>
       <article class="info-card">
-        <h3>2. Comparação transparente</h3>
-        <p>Termos da vaga são comparados com o currículo. A pontuação vem de critérios visíveis, explicados no relatório.</p>
+        <h3>2. Correspondência</h3>
+        <p>Cada requisito da vaga é comparado com o seu perfil. O resultado é classificado em Comprovado, Parcialmente demonstrado ou Não demonstrado/não informado — sempre com a origem da evidência.</p>
       </article>
       <article class="info-card">
-        <h3>3. Sugestões honestas</h3>
-        <p>Apontamos lacunas de clareza e apresentação. Nunca inventamos dados nem sugerimos enganar recrutadores.</p>
+        <h3>3. Perguntas e sugestões</h3>
+        <p>Quando falta informação, o sistema pergunta. Nunca inventa dados. As sugestões servem para apresentar melhor o que é verdadeiro.</p>
       </article>
       <article class="info-card">
-        <h3>4. Versão final</h3>
-        <p>Você edita, pré-visualiza e imprime ou salva em PDF direto pelo navegador.</p>
+        <h3>4. Currículo direcionado</h3>
+        <p>Experiências e bullets são reordenados por relevância, o resumo é direcionado à vaga e o documento é gerado em formato simples de uma coluna, legível por ATS e por pessoas.</p>
       </article>
     </div>
+  </section>
+
+  <!-- ============================================================
+       LIMITAÇÕES
+       ============================================================ -->
+  <section id="limitacoes" class="container info-section" aria-labelledby="lim-title">
+    <h2 id="lim-title">Limitações</h2>
+    <p>
+      O OR System é um motor <strong>determinístico</strong>, baseado em regras
+      explícitas e dicionários controlados. Ele <strong>não utiliza inteligência
+      artificial generativa</strong>, não envia dados para APIs externas e não
+      faz inferência semântica profunda.
+    </p>
+    <ul class="limitations-list">
+      <li>Reconhece formatos comuns de currículo; formatos muito atípicos podem não ser estruturados corretamente.</li>
+      <li>Sinônimos são tratados por dicionário controlado — não por aprendizado de máquina.</li>
+      <li>A classificação “Não informado” vs. “Não demonstrado” é heurística.</li>
+      <li>A pontuação é uma <em>estimativa de aderência ao conteúdo da vaga</em> — não é probabilidade de contratação nem nota real de ATS.</li>
+      <li>O sistema nunca inventa experiências, cargos, datas, empresas, ferramentas ou resultados.</li>
+    </ul>
   </section>
 
   <!-- ============================================================
