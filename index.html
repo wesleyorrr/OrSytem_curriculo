@@ -1,340 +1,300 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="OR System Currículo Inteligente — analise, compare e gere um currículo direcionado para uma vaga específica, de forma gratuita, direto no navegador." />
-  <meta name="author" content="OR System" />
-  <title>OR System — Currículo Inteligente</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="OR System Currículo Inteligente — crie, analise e melhore seu currículo. Gratuito, privado e honesto." />
+<title>OR System · Currículo Inteligente</title>
+<link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+<a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
 
-  <!-- ============================================================
-       CABEÇALHO
-       ============================================================ -->
-  <header class="site-header" role="banner">
-    <div class="container header-inner">
-      <div class="brand" aria-label="OR System">
-        <span class="brand-mark" aria-hidden="true">OR</span>
-        <span class="brand-text">
-          <strong>OR System</strong>
-          <small>Currículo Inteligente</small>
-        </span>
+<div class="app">
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar" id="sidebar" aria-label="Menu principal">
+    <div class="brand">
+      <div class="brand-mark">OR</div>
+      <div class="brand-text">
+        <strong>OR System</strong>
+        <span>Currículo Inteligente</span>
       </div>
-      <nav class="main-nav" aria-label="Navegação principal">
-        <a href="#analise" class="nav-link">Análise</a>
-        <a href="#como-funciona" class="nav-link">Como funciona</a>
-        <a href="#limitacoes" class="nav-link">Limitações</a>
-        <a href="#privacidade" class="nav-link">Privacidade</a>
-      </nav>
     </div>
-  </header>
 
-  <!-- ============================================================
-       HERO
-       ============================================================ -->
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="container">
-      <h1 id="hero-title">Construa um currículo direcionado para a vaga certa</h1>
-      <p class="hero-subtitle">
-        Cole seu currículo e a descrição da vaga. O OR System estrutura as duas informações,
-        compara requisitos com evidências reais do seu perfil, gera perguntas objetivas para
-        completar lacunas e produz um currículo direcionado, pronto para imprimir ou salvar em PDF.
-      </p>
-      <ul class="hero-badges" aria-label="Destaques do sistema">
-        <li>Gratuito</li>
-        <li>Sem cadastro</li>
-        <li>Roda no navegador</li>
-        <li>Não envia seus dados</li>
-      </ul>
-      <a href="#analise" class="btn btn-primary btn-lg">Começar análise</a>
+    <nav class="nav" id="nav">
+      <button class="nav-item is-active" data-view="painel"><span class="ico">▦</span> Painel inicial</button>
+      <button class="nav-item" data-view="criar"><span class="ico">✎</span> Criar meu currículo</button>
+      <button class="nav-item" data-view="diagnostico"><span class="ico">◔</span> Diagnóstico do currículo</button>
+      <button class="nav-item" data-view="vaga"><span class="ico">⌕</span> Analisar uma vaga</button>
+      <button class="nav-item" data-view="modelos"><span class="ico">▤</span> Modelos de currículo</button>
+      <button class="nav-item" data-view="meus"><span class="ico">▣</span> Meus currículos</button>
+      <button class="nav-item" data-view="config"><span class="ico">⚙</span> Configurações e privacidade</button>
+    </nav>
+
+    <div class="sidebar-foot">
+      <p><strong>Privacidade:</strong> seus dados ficam apenas neste navegador. Nada é enviado para servidores.</p>
     </div>
-  </section>
+  </aside>
 
-  <!-- ============================================================
-       MENSAGENS GLOBAIS
-       ============================================================ -->
-  <div id="global-messages" class="container" aria-live="polite" aria-atomic="true"></div>
+  <div class="overlay" id="overlay" hidden></div>
 
-  <!-- ============================================================
-       ÁREA PRINCIPAL
-       ============================================================ -->
-  <main id="analise" class="container main-area">
+  <!-- ================= MAIN ================= -->
+  <main class="main">
+    <header class="topbar">
+      <button class="icon-btn menu-btn" id="menuBtn" aria-label="Abrir menu" aria-expanded="false">☰</button>
+      <h1 class="topbar-title" id="topbarTitle">Painel inicial</h1>
+      <span class="save-badge" id="saveBadge" aria-live="polite"></span>
+    </header>
 
-    <!-- 1. ENTRADA -->
-    <section class="card" aria-labelledby="entrada-title">
-      <header class="card-header">
-        <h2 id="entrada-title">1. Insira os dados</h2>
-        <p class="card-help">
-          Cole ou digite o texto. Nada é enviado para servidores externos — tudo é
-          processado localmente no seu navegador.
-        </p>
-      </header>
+    <div class="content" id="conteudo">
 
-      <div class="grid-2">
-        <div class="field">
-          <label for="input-resume">
-            Seu currículo <span class="required" aria-hidden="true">*</span>
-          </label>
-          <textarea
-            id="input-resume"
-            name="resume"
-            rows="14"
-            placeholder="Cole aqui o conteúdo do seu currículo (contato, resumo, formação, experiências, competências...)"
-            aria-required="true"
-            spellcheck="true"
-          ></textarea>
-          <div class="field-meta">
-            <span id="resume-counter" class="counter">0 caracteres</span>
+      <!-- ---------- PAINEL INICIAL ---------- -->
+      <section class="view is-active" id="view-painel">
+        <div id="welcomeEmpty" hidden>
+          <div class="card hero">
+            <h2>Bem-vindo ao OR System Currículo Inteligente</h2>
+            <p class="muted">Você ainda não cadastrou informações. Comece pelo essencial — leva poucos minutos e você pode salvar e continuar depois.</p>
+            <div class="row-actions">
+              <button class="btn btn-primary" data-goto="criar">Criar meu currículo</button>
+              <button class="btn btn-ghost" data-goto="vaga">Analisar uma vaga</button>
+            </div>
+            <p class="note">Este sistema é gratuito e funciona no seu navegador. Ele <strong>não inventa</strong> experiências, cursos ou competências — apenas organiza e melhora o que você informar.</p>
           </div>
         </div>
 
-        <div class="field">
-          <label for="input-job">
-            Descrição da vaga <span class="required" aria-hidden="true">*</span>
-          </label>
-          <textarea
-            id="input-job"
-            name="job"
-            rows="14"
-            placeholder="Cole aqui a descrição da vaga: requisitos, responsabilidades, competências desejadas..."
-            aria-required="true"
-            spellcheck="true"
-          ></textarea>
-          <div class="field-meta">
-            <span id="job-counter" class="counter">0 caracteres</span>
+        <div id="dashboard" hidden>
+          <div class="card hero">
+            <h2 id="dashGreeting">Olá!</h2>
+            <p class="muted" id="dashSubtitle"></p>
+            <div class="row-actions">
+              <button class="btn btn-primary" data-goto="criar">Criar / editar currículo</button>
+              <button class="btn btn-ghost" data-goto="diagnostico">Diagnóstico do currículo</button>
+              <button class="btn btn-ghost" data-goto="vaga">Comparar com uma vaga</button>
+            </div>
+          </div>
+
+          <div class="grid-cards" id="dashStats"></div>
+
+          <div class="two-col">
+            <div class="card">
+              <h3>Pendências importantes</h3>
+              <p class="muted small">Itens calculados a partir das informações que você preencheu.</p>
+              <ul class="checklist" id="dashPending"></ul>
+            </div>
+
+            <div class="card">
+              <h3>Status do seu currículo</h3>
+              <ul class="meta-list" id="dashMeta"></ul>
+              <p class="note">O diagnóstico completo com nota e gráficos será liberado na Etapa 7.</p>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div class="actions-row">
-        <button type="button" id="btn-analyze" class="btn btn-primary">
-          Analisar compatibilidade
-        </button>
-        <button type="button" id="btn-sample" class="btn btn-secondary">
-          Carregar exemplo
-        </button>
-        <button type="button" id="btn-clear" class="btn btn-ghost">
-          Limpar campos
-        </button>
-      </div>
+      <!-- ---------- CRIAR MEU CURRÍCULO ---------- -->
+      <section class="view" id="view-criar">
+        <div class="view-head">
+          <h2>Criar meu currículo</h2>
+          <p class="muted">Preencha apenas informações verdadeiras. Campos marcados com <span class="req">*</span> são obrigatórios.</p>
+        </div>
 
-      <p class="disclaimer">
-        <strong>Importante:</strong> a pontuação é uma <em>estimativa própria</em> do OR System,
-        baseada em critérios visíveis no texto. Ela <strong>não</strong> reproduz algoritmos
-        internos de empresas ou de sistemas ATS. A ausência de uma palavra não significa
-        ausência da competência — use as sugestões para <em>apresentar melhor</em> o que é verdadeiro.
-      </p>
-    </section>
+        <div class="steps" id="steps" role="tablist">
+          <button class="step is-active" data-step="1" role="tab">1 · Dados pessoais</button>
+          <button class="step" data-step="2" role="tab">2 · Resumo</button>
+          <button class="step" data-step="3" role="tab">3 · Experiências</button>
+          <button class="step" data-step="4" role="tab">4 · Formação</button>
+          <button class="step" data-step="5" role="tab">5 · Cursos</button>
+          <button class="step" data-step="6" role="tab">6 · Competências</button>
+          <button class="step" data-step="7" role="tab">7 · Projetos</button>
+        </div>
 
-    <!-- 2. RESULTADOS -->
-    <section id="results" class="card hidden" aria-labelledby="resultados-title">
-      <header class="card-header">
-        <h2 id="resultados-title">2. Resultado da análise</h2>
-        <p class="card-help">
-          Veja a estimativa de aderência, palavras-chave, requisitos e sugestões.
-        </p>
-      </header>
+        <form id="profileForm" novalidate autocomplete="off">
 
-      <!-- Pontuação -->
-      <div class="score-block">
-        <div class="score-circle" aria-hidden="true">
-          <svg viewBox="0 0 120 120" class="score-svg">
-            <circle class="score-track" cx="60" cy="60" r="52"></circle>
-            <circle id="score-progress" class="score-fill" cx="60" cy="60" r="52"></circle>
-          </svg>
-          <div class="score-value">
-            <span id="score-number">0</span><span class="score-percent">%</span>
+          <!-- Passo 1 -->
+          <fieldset class="step-panel is-active card" data-step="1">
+            <legend>Dados pessoais e contato</legend>
+            <div class="grid-2">
+              <label class="field">Nome completo <span class="req">*</span>
+                <input type="text" data-path="personal.fullName" placeholder="Ex.: Maria Souza Lima" />
+                <em class="err" data-err="personal.fullName"></em>
+              </label>
+              <label class="field">E-mail <span class="req">*</span>
+                <input type="email" data-path="personal.email" placeholder="voce@email.com" />
+                <em class="err" data-err="personal.email"></em>
+              </label>
+              <label class="field">Telefone
+                <input type="tel" data-path="personal.phone" placeholder="(11) 99999-0000" />
+              </label>
+              <label class="field">Cidade
+                <input type="text" data-path="personal.city" placeholder="São Paulo" />
+              </label>
+              <label class="field">Estado
+                <input type="text" data-path="personal.state" placeholder="SP" maxlength="2" />
+              </label>
+              <label class="field">Cargo desejado
+                <input type="text" data-path="personal.targetRole" placeholder="Ex.: Analista de Dados Júnior" />
+              </label>
+              <label class="field">LinkedIn
+                <input type="url" data-path="personal.linkedin" placeholder="https://linkedin.com/in/seu-perfil" />
+              </label>
+              <label class="field">Portfólio / GitHub
+                <input type="url" data-path="personal.portfolio" placeholder="https://github.com/seu-usuario" />
+              </label>
+            </div>
+            <p class="note">Não pedimos CPF, RG nem endereço residencial completo — não são necessários para um currículo.</p>
+          </fieldset>
+
+          <!-- Passo 2 -->
+          <fieldset class="step-panel card" data-step="2">
+            <legend>Resumo profissional</legend>
+            <label class="field">Escreva um resumo com sua experiência, conhecimentos e objetivos
+              <textarea rows="7" data-path="summary" placeholder="Ex.: Profissional com 4 anos de experiência em análise de dados..."></textarea>
+              <em class="err" data-err="summary"></em>
+            </label>
+            <p class="note" id="summaryCounter">0 caracteres.</p>
+          </fieldset>
+
+          <!-- Passo 3 -->
+          <fieldset class="step-panel card" data-step="3">
+            <legend>Experiências profissionais</legend>
+            <div id="listExperiences" class="list" data-list="experiences"></div>
+            <button type="button" class="btn btn-outline" data-add="experiences">+ Adicionar experiência</button>
+            <p class="note">Descreva o que você realmente fez. Resultados só devem ser informados se você tiver os números.</p>
+          </fieldset>
+
+          <!-- Passo 4 -->
+          <fieldset class="step-panel card" data-step="4">
+            <legend>Formação acadêmica</legend>
+            <div id="listEducation" class="list" data-list="education"></div>
+            <button type="button" class="btn btn-outline" data-add="education">+ Adicionar formação</button>
+          </fieldset>
+
+          <!-- Passo 5 -->
+          <fieldset class="step-panel card" data-step="5">
+            <legend>Cursos e certificações</legend>
+            <div id="listCourses" class="list" data-list="courses"></div>
+            <button type="button" class="btn btn-outline" data-add="courses">+ Adicionar curso</button>
+          </fieldset>
+
+          <!-- Passo 6 -->
+          <fieldset class="step-panel card" data-step="6">
+            <legend>Competências e idiomas</legend>
+            <label class="field">Competências técnicas <small>(separe por vírgula)</small>
+              <input type="text" data-path="skills.technical" placeholder="Excel avançado, SQL, Estatística" />
+            </label>
+            <label class="field">Ferramentas e tecnologias <small>(separe por vírgula)</small>
+              <input type="text" data-path="skills.tools" placeholder="Python, Power BI, Git" />
+            </label>
+            <label class="field">Competências interpessoais <small>(separe por vírgula)</small>
+              <input type="text" data-path="skills.soft" placeholder="Comunicação, Trabalho em equipe" />
+            </label>
+            <hr class="sep" />
+            <h4>Idiomas</h4>
+            <div id="listLanguages" class="list" data-list="languages"></div>
+            <button type="button" class="btn btn-outline" data-add="languages">+ Adicionar idioma</button>
+          </fieldset>
+
+          <!-- Passo 7 -->
+          <fieldset class="step-panel card" data-step="7">
+            <legend>Projetos e outras informações</legend>
+            <div id="listProjects" class="list" data-list="projects"></div>
+            <button type="button" class="btn btn-outline" data-add="projects">+ Adicionar projeto</button>
+            <p class="note">Inclua projetos pessoais, portfólio, trabalhos voluntários e outras experiências relevantes.</p>
+          </fieldset>
+
+          <!-- Barra de ações -->
+          <div class="form-actions">
+            <button type="button" class="btn btn-ghost" id="prevStep">← Anterior</button>
+            <span class="spacer"></span>
+            <button type="button" class="btn btn-outline" id="nextStep">Próximo →</button>
+            <button type="submit" class="btn btn-primary">Salvar progresso</button>
           </div>
-        </div>
-        <div class="score-info">
-          <h3 id="score-label">Aderência estimada à vaga</h3>
-          <p id="score-description" class="score-description">
-            Preencha os campos e clique em “Analisar compatibilidade”.
-          </p>
-          <ul id="score-breakdown" class="score-breakdown" aria-label="Detalhamento da pontuação"></ul>
-        </div>
-      </div>
+        </form>
+      </section>
 
-      <!-- Palavras-chave -->
-      <div class="grid-2">
-        <div class="keyword-box">
-          <h3>Palavras-chave encontradas</h3>
-          <ul id="keywords-found" class="tag-list" aria-live="polite">
-            <li class="empty">Nenhuma análise realizada ainda.</li>
+      <!-- ---------- DIAGNÓSTICO ---------- -->
+      <section class="view" id="view-diagnostico">
+        <div class="view-head"><h2>Diagnóstico do Currículo</h2></div>
+        <div class="card placeholder">
+          <span class="badge badge-warn">Etapa 7</span>
+          <h3>Ainda não implementado</h3>
+          <p class="muted">Esta área vai conter: nota geral (0–100), gráfico de desempenho por categoria, gráfico de compatibilidade com a vaga, lista de problemas com prioridade, pontos fortes, botão “Melhorar meu currículo” e comparação antes/depois.</p>
+          <p class="muted small">A nota será calculada por critérios reais e documentados no código. Se faltarem dados, o sistema exibirá <em>“Dados insuficientes para uma avaliação completa”</em> em vez de inventar um número.</p>
+        </div>
+      </section>
+
+      <!-- ---------- VAGA ---------- -->
+      <section class="view" id="view-vaga">
+        <div class="view-head"><h2>Analisar uma vaga</h2></div>
+        <div class="card placeholder">
+          <span class="badge badge-warn">Etapa 4</span>
+          <h3>Ainda não implementado</h3>
+          <p class="muted">Aqui você poderá colar a descrição completa da vaga. O sistema identificará cargo, responsabilidades, requisitos obrigatórios e desejáveis, competências, ferramentas, formação, experiência e palavras-chave.</p>
+        </div>
+      </section>
+
+      <!-- ---------- MODELOS ---------- -->
+      <section class="view" id="view-modelos">
+        <div class="view-head"><h2>Modelos de currículo</h2></div>
+        <div class="card placeholder">
+          <span class="badge badge-warn">Etapa 6</span>
+          <h3>Ainda não implementado</h3>
+          <p class="muted">Serão seis modelos funcionais com pré-visualização real e exportação em PDF: <strong>ATS Profissional</strong> (padrão recomendado), <strong>Moderno</strong>, <strong>Executivo</strong>, <strong>Minimalista</strong>, <strong>Tecnologia e Dados</strong> e <strong>Primeiro Emprego</strong>.</p>
+        </div>
+      </section>
+
+      <!-- ---------- MEUS CURRÍCULOS ---------- -->
+      <section class="view" id="view-meus">
+        <div class="view-head"><h2>Meus currículos</h2></div>
+        <div class="card placeholder">
+          <span class="badge badge-warn">Etapa 5</span>
+          <h3>Ainda não implementado</h3>
+          <p class="muted">Permitirá manter várias versões do currículo (uma por vaga, por exemplo), duplicar, renomear e excluir.</p>
+          <p class="muted small">Nesta versão existe um único perfil, salvo automaticamente neste navegador.</p>
+        </div>
+      </section>
+
+      <!-- ---------- CONFIGURAÇÕES ---------- -->
+      <section class="view" id="view-config">
+        <div class="view-head"><h2>Configurações e privacidade</h2></div>
+
+        <div class="card">
+          <h3>Onde seus dados ficam</h3>
+          <p class="muted">Todo o conteúdo que você digita é gravado no <strong>armazenamento local (localStorage)</strong> deste navegador, neste dispositivo. Nada é enviado para servidores do OR System.</p>
+          <ul class="bullets">
+            <li>Se você limpar os dados do navegador, o currículo será perdido.</li>
+            <li>Em outro computador ou celular, os dados não aparecerão automaticamente.</li>
+            <li>Não insira senhas, dados bancários ou informações extremamente sensíveis.</li>
+            <li>Não armazenamos CPF, RG nem endereço residencial completo.</li>
           </ul>
         </div>
-        <div class="keyword-box">
-          <h3>Palavras-chave ausentes</h3>
-          <ul id="keywords-missing" class="tag-list tag-list-warn" aria-live="polite">
-            <li class="empty">Nenhuma análise realizada ainda.</li>
-          </ul>
+
+        <div class="card">
+          <h3>Backup dos seus dados</h3>
+          <div class="row-actions">
+            <button class="btn btn-outline" id="exportJson">Baixar backup (.json)</button>
+            <button class="btn btn-outline" id="importJsonBtn">Restaurar backup</button>
+            <input type="file" id="importJson" accept="application/json,.json" hidden />
+          </div>
         </div>
-      </div>
 
-      <!-- Requisitos -->
-      <div class="requirements-block">
-        <h3>Classificação dos requisitos da vaga</h3>
-        <div class="req-legend" aria-hidden="true">
-          <span class="req-dot req-dot-demonstrado"></span> Comprovado
-          <span class="req-dot req-dot-parcial"></span> Parcialmente demonstrado
-          <span class="req-dot req-dot-ausente"></span> Não demonstrado / não informado
+        <div class="card danger">
+          <h3>Excluir dados locais</h3>
+          <p class="muted">Remove permanentemente todas as informações salvas neste navegador. Não há como desfazer.</p>
+          <button class="btn btn-danger" id="wipeData">Excluir todos os meus dados</button>
         </div>
-        <ul id="requirements-list" class="requirements-list" aria-live="polite">
-          <li class="empty">Nenhuma análise realizada ainda.</li>
-        </ul>
-      </div>
+      </section>
 
-      <!-- Relatório -->
-      <div class="report-block">
-        <h3>Relatório: problemas e sugestões</h3>
-        <div id="report-content" class="report-content" aria-live="polite">
-          <p class="empty">Nenhuma análise realizada ainda.</p>
-        </div>
-      </div>
-
-      <!-- Perguntas -->
-      <div class="questions-block">
-        <h3>Perguntas para completar seu perfil</h3>
-        <p class="card-help">
-          Estas perguntas existem porque faltam informações no texto atual.
-          Responder é opcional — nada é inventado pelo sistema.
-        </p>
-        <ul id="questions-list" class="questions-list" aria-live="polite">
-          <li class="empty">Nenhuma pergunta no momento.</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- 3. EDIÇÃO -->
-    <section id="editor" class="card hidden" aria-labelledby="editor-title">
-      <header class="card-header">
-        <h2 id="editor-title">3. Edite seu currículo</h2>
-        <p class="card-help">
-          Se você não editar nada, o botão "Gerar pré-visualização" produz um currículo
-          direcionado automaticamente (experiências e bullets reordenados por relevância).
-          Você pode sobrescrever como quiser. É sua responsabilidade manter a veracidade.
-        </p>
-      </header>
-
-      <div class="field">
-        <label for="input-resume-edited">Currículo otimizado</label>
-        <textarea
-          id="input-resume-edited"
-          name="resume-edited"
-          rows="18"
-          spellcheck="true"
-          placeholder="Edite aqui o conteúdo do seu currículo com base nas sugestões."
-        ></textarea>
-      </div>
-
-      <div class="actions-row">
-        <button type="button" id="btn-preview" class="btn btn-primary">
-          Gerar pré-visualização
-        </button>
-        <button type="button" id="btn-reset-editor" class="btn btn-ghost">
-          Restaurar texto original
-        </button>
-      </div>
-    </section>
-
-    <!-- 4. PREVIEW -->
-    <section id="preview" class="card hidden" aria-labelledby="preview-title">
-      <header class="card-header">
-        <h2 id="preview-title">4. Pré-visualização do currículo</h2>
-        <p class="card-help">
-          Revise o resultado abaixo. Use o botão para imprimir ou salvar em PDF
-          pela função nativa do navegador.
-        </p>
-      </header>
-
-      <div class="preview-toolbar">
-        <button type="button" id="btn-print" class="btn btn-primary">
-          Imprimir / Salvar em PDF
-        </button>
-        <button type="button" id="btn-back-edit" class="btn btn-secondary">
-          Voltar para edição
-        </button>
-      </div>
-
-      <article id="preview-content" class="preview-content" aria-live="polite">
-        <!-- Conteúdo gerado dinamicamente -->
-      </article>
-    </section>
+    </div>
   </main>
+</div>
 
-  <!-- ============================================================
-       COMO FUNCIONA
-       ============================================================ -->
-  <section id="como-funciona" class="container info-section" aria-labelledby="como-title">
-    <h2 id="como-title">Como funciona</h2>
-    <div class="info-grid">
-      <article class="info-card">
-        <h3>1. Estruturação</h3>
-        <p>O sistema identifica contato, experiências, formação, competências, idiomas, certificações e projetos no seu currículo. E estrutura a vaga em obrigatórios, desejáveis, técnicas, comportamentais e ferramentas.</p>
-      </article>
-      <article class="info-card">
-        <h3>2. Correspondência</h3>
-        <p>Cada requisito da vaga é comparado com o seu perfil. O resultado é classificado em Comprovado, Parcialmente demonstrado ou Não demonstrado/não informado — sempre com a origem da evidência.</p>
-      </article>
-      <article class="info-card">
-        <h3>3. Perguntas e sugestões</h3>
-        <p>Quando falta informação, o sistema pergunta. Nunca inventa dados. As sugestões servem para apresentar melhor o que é verdadeiro.</p>
-      </article>
-      <article class="info-card">
-        <h3>4. Currículo direcionado</h3>
-        <p>Experiências e bullets são reordenados por relevância, o resumo é direcionado à vaga e o documento é gerado em formato simples de uma coluna, legível por ATS e por pessoas.</p>
-      </article>
-    </div>
-  </section>
+<!-- Toast -->
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-  <!-- ============================================================
-       LIMITAÇÕES
-       ============================================================ -->
-  <section id="limitacoes" class="container info-section" aria-labelledby="lim-title">
-    <h2 id="lim-title">Limitações</h2>
-    <p>
-      O OR System é um motor <strong>determinístico</strong>, baseado em regras
-      explícitas e dicionários controlados. Ele <strong>não utiliza inteligência
-      artificial generativa</strong>, não envia dados para APIs externas e não
-      faz inferência semântica profunda.
-    </p>
-    <ul class="limitations-list">
-      <li>Reconhece formatos comuns de currículo; formatos muito atípicos podem não ser estruturados corretamente.</li>
-      <li>Sinônimos são tratados por dicionário controlado — não por aprendizado de máquina.</li>
-      <li>A classificação “Não informado” vs. “Não demonstrado” é heurística.</li>
-      <li>A pontuação é uma <em>estimativa de aderência ao conteúdo da vaga</em> — não é probabilidade de contratação nem nota real de ATS.</li>
-      <li>O sistema nunca inventa experiências, cargos, datas, empresas, ferramentas ou resultados.</li>
-    </ul>
-  </section>
-
-  <!-- ============================================================
-       PRIVACIDADE
-       ============================================================ -->
-  <section id="privacidade" class="container info-section" aria-labelledby="priv-title">
-    <h2 id="priv-title">Privacidade</h2>
-    <p>
-      Todo o processamento acontece <strong>no seu navegador</strong>. Nenhum dado é enviado
-      para servidores, APIs ou serviços de terceiros. O OR System não armazena currículos
-      nem informações pessoais. Ao fechar ou recarregar a página, os textos são descartados.
-    </p>
-  </section>
-
-  <!-- ============================================================
-       RODAPÉ
-       ============================================================ -->
-  <footer class="site-footer" role="contentinfo">
-    <div class="container footer-inner">
-      <p class="footer-brand"><strong>OR System</strong> — Currículo Inteligente</p>
-      <p class="footer-note">
-        Ferramenta gratuita de apoio ao candidato. Não substitui revisão profissional
-        nem garante resultados em processos seletivos.
-      </p>
-      <p class="footer-copy">© <span id="year"></span> OR System. Todos os direitos reservados.</p>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
+<script src="js/util.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/profile.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
