@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="OR System Currículo Inteligente — analise, compare e otimize seu currículo de forma gratuita, direto no navegador." />
+  <meta name="author" content="OR System" />
+  <title>OR System — Currículo Inteligente</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============================================================
+       CABEÇALHO
+       ============================================================ -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <div class="brand" aria-label="OR System">
+        <span class="brand-mark" aria-hidden="true">OR</span>
+        <span class="brand-text">
+          <strong>OR System</strong>
+          <small>Currículo Inteligente</small>
+        </span>
+      </div>
+      <nav class="main-nav" aria-label="Navegação principal">
+        <a href="#analise" class="nav-link">Análise</a>
+        <a href="#como-funciona" class="nav-link">Como funciona</a>
+        <a href="#privacidade" class="nav-link">Privacidade</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       HERO / INTRODUÇÃO
+       ============================================================ -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="container">
+      <h1 id="hero-title">Analise e otimize seu currículo em minutos</h1>
+      <p class="hero-subtitle">
+        Cole seu currículo e a descrição da vaga. O OR System compara as informações,
+        mostra palavras-chave presentes e ausentes, aponta melhorias e gera uma versão
+        profissional pronta para imprimir ou salvar em PDF.
+      </p>
+      <ul class="hero-badges" aria-label="Destaques do sistema">
+        <li>Gratuito</li>
+        <li>Sem cadastro</li>
+        <li>Roda no navegador</li>
+        <li>Não envia seus dados</li>
+      </ul>
+      <a href="#analise" class="btn btn-primary btn-lg">Começar análise</a>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       MENSAGENS GLOBAIS (erro / sucesso / aviso)
+       ============================================================ -->
+  <div id="global-messages" class="container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- ============================================================
+       ÁREA PRINCIPAL — ANÁLISE
+       ============================================================ -->
+  <main id="analise" class="container main-area">
+
+    <!-- -------------------------------
+         ENTRADA DE DADOS
+         ------------------------------- -->
+    <section class="card" aria-labelledby="entrada-title">
+      <header class="card-header">
+        <h2 id="entrada-title">1. Insira os dados</h2>
+        <p class="card-help">
+          Cole ou digite o texto. Nada é enviado para servidores externos — tudo é
+          processado localmente no seu navegador.
+        </p>
+      </header>
+
+      <div class="grid-2">
+        <!-- Currículo -->
+        <div class="field">
+          <label for="input-resume">
+            Seu currículo <span class="required" aria-hidden="true">*</span>
+          </label>
+          <textarea
+            id="input-resume"
+            name="resume"
+            rows="14"
+            placeholder="Cole aqui o conteúdo do seu currículo (contato, resumo, formação, experiências, competências...)"
+            aria-required="true"
+            spellcheck="true"
+          ></textarea>
+          <div class="field-meta">
+            <span id="resume-counter" class="counter">0 caracteres</span>
+          </div>
+        </div>
+
+        <!-- Vaga -->
+        <div class="field">
+          <label for="input-job">
+            Descrição da vaga <span class="required" aria-hidden="true">*</span>
+          </label>
+          <textarea
+            id="input-job"
+            name="job"
+            rows="14"
+            placeholder="Cole aqui a descrição da vaga: requisitos, responsabilidades, competências desejadas..."
+            aria-required="true"
+            spellcheck="true"
+          ></textarea>
+          <div class="field-meta">
+            <span id="job-counter" class="counter">0 caracteres</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ações -->
+      <div class="actions-row">
+        <button type="button" id="btn-analyze" class="btn btn-primary">
+          Analisar compatibilidade
+        </button>
+        <button type="button" id="btn-sample" class="btn btn-secondary">
+          Carregar exemplo
+        </button>
+        <button type="button" id="btn-clear" class="btn btn-ghost">
+          Limpar campos
+        </button>
+      </div>
+
+      <p class="disclaimer">
+        <strong>Importante:</strong> a pontuação é uma <em>estimativa própria</em> do OR System,
+        baseada em critérios visíveis no texto. Ela <strong>não</strong> reproduz algoritmos
+        internos de empresas ou de sistemas ATS. A ausência de uma palavra não significa
+        ausência da competência — use as sugestões para <em>apresentar melhor</em> o que é verdadeiro.
+      </p>
+    </section>
+
+    <!-- -------------------------------
+         RESULTADOS
+         ------------------------------- -->
+    <section id="results" class="card hidden" aria-labelledby="resultados-title">
+      <header class="card-header">
+        <h2 id="resultados-title">2. Resultado da análise</h2>
+        <p class="card-help">
+          Veja a estimativa de compatibilidade, palavras-chave e sugestões de melhoria.
+        </p>
+      </header>
+
+      <!-- Pontuação -->
+      <div class="score-block">
+        <div class="score-circle" aria-hidden="true">
+          <svg viewBox="0 0 120 120" class="score-svg">
+            <circle class="score-track" cx="60" cy="60" r="52"></circle>
+            <circle id="score-progress" class="score-fill" cx="60" cy="60" r="52"></circle>
+          </svg>
+          <div class="score-value">
+            <span id="score-number">0</span><span class="score-percent">%</span>
+          </div>
+        </div>
+        <div class="score-info">
+          <h3 id="score-label">Compatibilidade estimada</h3>
+          <p id="score-description" class="score-description">
+            Preencha os campos e clique em “Analisar compatibilidade”.
+          </p>
+          <ul id="score-breakdown" class="score-breakdown" aria-label="Detalhamento da pontuação"></ul>
+        </div>
+      </div>
+
+      <!-- Palavras-chave -->
+      <div class="grid-2">
+        <div class="keyword-box">
+          <h3>Palavras-chave encontradas</h3>
+          <ul id="keywords-found" class="tag-list" aria-live="polite">
+            <li class="empty">Nenhuma análise realizada ainda.</li>
+          </ul>
+        </div>
+        <div class="keyword-box">
+          <h3>Palavras-chave ausentes</h3>
+          <ul id="keywords-missing" class="tag-list tag-list-warn" aria-live="polite">
+            <li class="empty">Nenhuma análise realizada ainda.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Classificação dos requisitos -->
+      <div class="requirements-block">
+        <h3>Classificação dos requisitos da vaga</h3>
+        <div class="req-legend" aria-hidden="true">
+          <span class="req-dot req-dot-demonstrado"></span> Demonstrado
+          <span class="req-dot req-dot-parcial"></span> Parcialmente demonstrado
+          <span class="req-dot req-dot-ausente"></span> Não identificado
+        </div>
+        <ul id="requirements-list" class="requirements-list" aria-live="polite">
+          <li class="empty">Nenhuma análise realizada ainda.</li>
+        </ul>
+      </div>
+
+      <!-- Relatório -->
+      <div class="report-block">
+        <h3>Relatório: problemas e sugestões</h3>
+        <div id="report-content" class="report-content" aria-live="polite">
+          <p class="empty">Nenhuma análise realizada ainda.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- -------------------------------
+         EDIÇÃO DO CURRÍCULO
+         ------------------------------- -->
+    <section id="editor" class="card hidden" aria-labelledby="editor-title">
+      <header class="card-header">
+        <h2 id="editor-title">3. Edite seu currículo</h2>
+        <p class="card-help">
+          Aplique as sugestões que fizerem sentido. Você é responsável pela veracidade
+          das informações — o sistema não cria experiências nem competências.
+        </p>
+      </header>
+
+      <div class="field">
+        <label for="input-resume-edited">Currículo otimizado</label>
+        <textarea
+          id="input-resume-edited"
+          name="resume-edited"
+          rows="18"
+          spellcheck="true"
+          placeholder="Edite aqui o conteúdo do seu currículo com base nas sugestões."
+        ></textarea>
+      </div>
+
+      <div class="actions-row">
+        <button type="button" id="btn-preview" class="btn btn-primary">
+          Gerar pré-visualização
+        </button>
+        <button type="button" id="btn-reset-editor" class="btn btn-ghost">
+          Restaurar texto original
+        </button>
+      </div>
+    </section>
+
+    <!-- -------------------------------
+         PRÉ-VISUALIZAÇÃO
+         ------------------------------- -->
+    <section id="preview" class="card hidden" aria-labelledby="preview-title">
+      <header class="card-header">
+        <h2 id="preview-title">4. Pré-visualização do currículo</h2>
+        <p class="card-help">
+          Revise o resultado abaixo. Use o botão para imprimir ou salvar em PDF
+          pela função nativa do navegador.
+        </p>
+      </header>
+
+      <div class="preview-toolbar">
+        <button type="button" id="btn-print" class="btn btn-primary">
+          Imprimir / Salvar em PDF
+        </button>
+        <button type="button" id="btn-back-edit" class="btn btn-secondary">
+          Voltar para edição
+        </button>
+      </div>
+
+      <article id="preview-content" class="preview-content" aria-live="polite">
+        <!-- Conteúdo gerado dinamicamente -->
+      </article>
+    </section>
+  </main>
+
+  <!-- ============================================================
+       COMO FUNCIONA
+       ============================================================ -->
+  <section id="como-funciona" class="container info-section" aria-labelledby="como-title">
+    <h2 id="como-title">Como funciona</h2>
+    <div class="info-grid">
+      <article class="info-card">
+        <h3>1. Cole o currículo e a vaga</h3>
+        <p>O sistema lê o texto e identifica seções como contato, formação, experiências e competências.</p>
+      </article>
+      <article class="info-card">
+        <h3>2. Comparação transparente</h3>
+        <p>Termos da vaga são comparados com o currículo. A pontuação vem de critérios visíveis, explicados no relatório.</p>
+      </article>
+      <article class="info-card">
+        <h3>3. Sugestões honestas</h3>
+        <p>Apontamos lacunas de clareza e apresentação. Nunca inventamos dados nem sugerimos enganar recrutadores.</p>
+      </article>
+      <article class="info-card">
+        <h3>4. Versão final</h3>
+        <p>Você edita, pré-visualiza e imprime ou salva em PDF direto pelo navegador.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PRIVACIDADE
+       ============================================================ -->
+  <section id="privacidade" class="container info-section" aria-labelledby="priv-title">
+    <h2 id="priv-title">Privacidade</h2>
+    <p>
+      Todo o processamento acontece <strong>no seu navegador</strong>. Nenhum dado é enviado
+      para servidores, APIs ou serviços de terceiros. O OR System não armazena currículos
+      nem informações pessoais. Ao fechar ou recarregar a página, os textos são descartados.
+    </p>
+  </section>
+
+  <!-- ============================================================
+       RODAPÉ
+       ============================================================ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <p class="footer-brand"><strong>OR System</strong> — Currículo Inteligente</p>
+      <p class="footer-note">
+        Ferramenta gratuita de apoio ao candidato. Não substitui revisão profissional
+        nem garante resultados em processos seletivos.
+      </p>
+      <p class="footer-copy">© <span id="year"></span> OR System. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
